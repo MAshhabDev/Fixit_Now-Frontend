@@ -1,8 +1,16 @@
+import { AboutSection } from "./_components/AboutSection";
+import { Footer } from "./_components/Footer";
+import { HeroSection } from "./_components/HeroSection";
+import { PublicServices } from "./_components/PublicServices";
+import { TechnicianCTA } from "./_components/TechnicianCTA";
+
 const HomePage = () => {
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+
+      <HeroSection></HeroSection>
+      {/* <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
             Professional Home Services
@@ -14,10 +22,12 @@ const HomePage = () => {
             Get Started Today
           </button>
         </div>
-      </section>
+      </section> */}
 
       {/* Services Section */}
-      <section id="services" className="bg-card py-16">
+
+      <PublicServices></PublicServices>
+      {/* <section id="services" className="bg-card py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="mb-12 text-center text-3xl font-bold">Our Services</h2>
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -57,10 +67,11 @@ const HomePage = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* About Section */}
-      <section
+      <AboutSection></AboutSection>
+      {/* <section
         id="about"
         className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8"
       >
@@ -81,9 +92,14 @@ const HomePage = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
-      {/* CTA Section */}
+            <TechnicianCTA></TechnicianCTA>
+
+
+      <Footer></Footer>
+
+      {/* CTA Section
       <section id="contact" className="bg-card py-16">
         <div className="mx-auto max-w-2xl px-4 text-center sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold">Ready to Get Started?</h2>
@@ -102,7 +118,8 @@ const HomePage = () => {
             </a>
           </div>
         </div>
-      </section>
+      </section> */}
+
     </main>
   );
 };

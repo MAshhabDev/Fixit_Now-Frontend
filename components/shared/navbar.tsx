@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,7 +24,7 @@ import {
   X,
 } from "lucide-react";
 
-// FixItNow Navigation items configuration
+// Nav items for FixItNow
 const navItems = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/services" },
@@ -31,14 +33,13 @@ const navItems = [
   { label: "Contact", href: "/contact" },
 ];
 
-// User menu items configuration
+// User dropdown options
 const userMenuItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { label: "My Bookings", href: "/dashboard/customer", icon: Calendar },
   { label: "Profile & Settings", href: "/profile", icon: Settings },
 ];
 
-// Mock Prop Types (আপনার টাইপ অনুযায়ী পরে অ্যাডজাস্ট করবেন)
 interface NavbarProps {
   user?: {
     success: boolean;
@@ -53,6 +54,7 @@ interface NavbarProps {
 }
 
 export function Navbar({ user }: NavbarProps) {
+  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -60,9 +62,9 @@ export function Navbar({ user }: NavbarProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 shrink-0">
-            <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-primary-foreground shadow-sm">
+          {/* ================= 1. BRAND LOGO ================= */}
+          <Link href="/" className="flex items-center gap-2 shrink-0 group">
+            <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-primary-foreground shadow-md transition-transform group-hover:scale-105">
               <Wrench className="w-5 h-5" />
             </div>
             <span className="text-2xl font-bold tracking-tight text-primary">
@@ -70,20 +72,41 @@ export function Navbar({ user }: NavbarProps) {
             </span>
           </Link>
 
-          {/* Desktop Nav Links */}
+          {/* ================= 2. DESKTOP NAV LINKS WITH ANIMATED UNDERLINE ================= */}
           <div className="hidden md:absolute md:left-1/2 md:transform md:-translate-x-1/2 md:flex md:items-center md:gap-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-foreground/80 hover:text-primary transition-colors text-sm font-medium"
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`relative py-2 text-sm font-medium transition-colors ${
+                    isActive
+                      ? "text-primary font-bold"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  <span>{item.label}</span>
+
+                  {/* ✨ Framer Motion Active Route Underline */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="active-nav-underline"
+                      className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-primary rounded-full"
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 30,
+                      }}
+                    />
+                  )}
+                </Link>
+              );
+            })}
           </div>
 
-          {/* Right Action: User Dropdown or Login Button */}
+          {/* ================= 3. USER DROPDOWN OR LOGIN BUTTON ================= */}
           <div className="hidden md:flex md:items-center md:gap-4">
             {user?.success ? (
               <DropdownMenu>
@@ -146,7 +169,7 @@ export function Navbar({ user }: NavbarProps) {
             )}
           </div>
 
-          {/* Mobile Hamburger Menu Toggle */}
+          {/* ================= 4. MOBILE MENU TOGGLE ================= */}
           <div className="flex md:hidden items-center">
             <Button
               variant="ghost"
@@ -161,20 +184,27 @@ export function Navbar({ user }: NavbarProps) {
         </div>
       </div>
 
-      {/* Mobile Drawer Menu UI */}
+      {/* ================= 5. MOBILE DRAWER MENU ================= */}
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-border bg-background px-4 pt-2 pb-6 space-y-3">
           <div className="space-y-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:bg-accent hover:text-accent-foreground"
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                    isActive
+                      ? "bg-primary/10 text-primary font-bold"
+                      : "text-foreground hover:bg-accent"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
           </div>
 
           <div className="pt-4 border-t border-border">
