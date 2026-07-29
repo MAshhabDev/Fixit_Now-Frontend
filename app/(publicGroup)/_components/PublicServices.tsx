@@ -1,79 +1,15 @@
 "use client";
 
 import React from "react";
-import { ServiceCard, ServiceCardProps } from "./ServiceCard";
+import { ServiceCard } from "./ServiceCard";
 import Link from "next/link";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles, Wrench } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { getAllServices } from "../_actions/getAllServices";
+import type { ServicesApiResponse } from "@/lib/types";
 
-const mockServices: ServiceCardProps[] = [
-  {
-    id: "1",
-    title: "Complete Home AC Servicing & Repair",
-    category: "AC Repair",
-    image:
-      "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=800&auto=format&fit=crop",
-    rating: 4.9,
-    reviewCount: 128,
-    startingPrice: 49,
-    technician: {
-      name: "Alex Morgan",
-      avatar:
-        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop",
-      location: "Dhaka, Bangladesh",
-    },
-  },
-  {
-    id: "2",
-    title: "Expert Kitchen & Bathroom Plumbing",
-    category: "Plumbing",
-    image:
-      "https://images.unsplash.com/photo-1585704032915-c3400ca199e7?q=80&w=800&auto=format&fit=crop",
-    rating: 4.8,
-    reviewCount: 95,
-    startingPrice: 35,
-    technician: {
-      name: "David Miller",
-      avatar:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop",
-      location: "Gulshan, Dhaka",
-    },
-  },
-  {
-    id: "3",
-    title: "Full House Deep Cleaning & Sanitization",
-    category: "Cleaning",
-    image:
-      "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=800&auto=format&fit=crop",
-    rating: 4.9,
-    reviewCount: 210,
-    startingPrice: 79,
-    technician: {
-      name: "Sophia Ray",
-      avatar:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop",
-      location: "Banani, Dhaka",
-    },
-  },
-  {
-    id: "4",
-    title: "Electrical Wiring & Appliance Fixing",
-    category: "Electrical",
-    image:
-      "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?q=80&w=800&auto=format&fit=crop",
-    rating: 4.7,
-    reviewCount: 64,
-    startingPrice: 40,
-    technician: {
-      name: "Robert Chen",
-      avatar:
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop",
-      location: "Dhanmondi, Dhaka",
-    },
-  },
-];
-
+const mockServices: ServicesApiResponse = await getAllServices();
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -91,27 +27,33 @@ const itemVariants = {
 
 export function PublicServices() {
   return (
-    <section className="py-16 bg-background">
+    <section className="py-16 lg:py-24 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
+        {/* ================= SECTION HEADER WITH OUR SERVICES HEADING ================= */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4"
+          className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6"
         >
-          <div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-primary tracking-wider uppercase mb-2">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Top Rated Services</span>
+          <div className="space-y-3 max-w-2xl">
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-primary tracking-wider uppercase bg-primary/10 px-3.5 py-1 rounded-full border border-primary/20">
+              <Wrench className="w-3.5 h-3.5" />
+              <span>Our Services</span>
             </div>
-            <h2 className="text-3xl font-extrabold text-foreground tracking-tight sm:text-4xl">
-              Popular Home Services
+
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-foreground tracking-tight">
+              Explore Our Professional Services
             </h2>
+
+            <p className="text-muted-foreground text-sm sm:text-base">
+              From plumbing and electrical repairs to AC servicing and deep
+              cleaning — get background-checked experts at your doorstep.
+            </p>
           </div>
 
-          <Link href="/services">
+          <Link href="/services" className="shrink-0">
             <Button
               variant="outline"
               className="rounded-xl flex items-center gap-2 font-semibold hover:scale-105 transition-transform"
@@ -122,7 +64,7 @@ export function PublicServices() {
           </Link>
         </motion.div>
 
-        {/* Animated Staggered Cards Grid */}
+        {/* ================= ANIMATED STAGGERED CARDS GRID ================= */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -130,9 +72,9 @@ export function PublicServices() {
           viewport={{ once: true, margin: "-50px" }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
-          {mockServices.map((service) => (
+          {mockServices.data.map((service) => (
             <motion.div key={service.id} variants={itemVariants}>
-              <ServiceCard {...service} />
+              <ServiceCard service={service} />
             </motion.div>
           ))}
         </motion.div>
