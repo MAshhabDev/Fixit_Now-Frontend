@@ -45,7 +45,14 @@ export interface Booking {
   id: string;
   bookingDate: string;
   timeSlot: string;
-  status: 'REQUESTED' | 'ACCEPTED' | 'DECLINED' | 'PAID' | 'IN_PROGRESS' | 'COMPLETED' | 'CANCELLED';
+  status:
+    | "REQUESTED"
+    | "ACCEPTED"
+    | "DECLINED"
+    | "PAID"
+    | "IN_PROGRESS"
+    | "COMPLETED"
+    | "CANCELLED";
   totalAmount: number;
   serviceAddress: string;
   createdAt: string;
@@ -86,13 +93,10 @@ export interface ApiResponse<T> {
 // 8. Services API Response Type Shortcut
 export type ServicesApiResponse = ApiResponse<ServiceItem[]>;
 
-// 1. User Role Type
 export type UserRole = "CUSTOMER" | "TECHNICIAN" | "ADMIN";
 
-// 2. User Status Type
 export type UserStatus = "ACTIVE" | "BLOCKED" | "BANNED";
 
-// 3. Registered User Data Interface
 export interface RegisteredUser {
   id: string;
   name: string;
@@ -105,15 +109,23 @@ export interface RegisteredUser {
   updatedAt: string;
 }
 
-// 4. Register API Data Wrapper Interface
 export interface RegisterResponseData {
   result: RegisteredUser;
 }
 
-// 5. Complete Register API Response Interface
 export interface RegisterApiResponse {
   success: boolean;
   statusCode: number; // 201
   message: string;
   data: RegisterResponseData;
 }
+
+export type LoginResponse = {
+  success: boolean;
+  statusCode: number; // 201
+  message: string;
+  data: {
+    accessToken: string;
+    refreshToken: string;
+  };
+};
