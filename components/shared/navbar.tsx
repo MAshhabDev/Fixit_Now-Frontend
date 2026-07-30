@@ -44,7 +44,7 @@ interface NavbarProps {
   user?: {
     success: boolean;
     data?: {
-      profile: {
+      result: {
         name: string;
         email: string;
         role: "CUSTOMER" | "TECHNICIAN" | "ADMIN";
@@ -61,7 +61,6 @@ export function Navbar({ user }: NavbarProps) {
     <nav className="border-b border-border bg-background/95 backdrop-blur sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          
           {/* ================= 1. BRAND LOGO ================= */}
           <Link href="/" className="flex items-center gap-2 shrink-0 group">
             <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-primary-foreground shadow-md transition-transform group-hover:scale-105">
@@ -117,18 +116,18 @@ export function Navbar({ user }: NavbarProps) {
                     </div>
                   </div>
                 </DropdownMenuTrigger>
-                
+
                 <DropdownMenuContent align="end" className="w-56 mt-1">
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
                       <p className="text-sm font-semibold leading-none text-foreground">
-                        {user.data?.profile.name || "User Name"}
+                        {user.data?.result.name || "User Name"}
                       </p>
                       <p className="text-xs text-muted-foreground leading-none">
-                        {user.data?.profile.email || "user@example.com"}
+                        {user.data?.result.email || "user@example.com"}
                       </p>
                       <span className="inline-block w-max mt-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-primary/10 text-primary">
-                        {user.data?.profile.role || "CUSTOMER"}
+                        {user.data?.result.role || "CUSTOMER"}
                       </span>
                     </div>
                   </DropdownMenuLabel>
@@ -138,7 +137,10 @@ export function Navbar({ user }: NavbarProps) {
                     const Icon = item.icon;
                     return (
                       <DropdownMenuItem key={item.label} asChild>
-                        <Link href={item.href} className="cursor-pointer flex items-center">
+                        <Link
+                          href={item.href}
+                          className="cursor-pointer flex items-center"
+                        >
                           <Icon className="w-4 h-4 mr-2 text-muted-foreground" />
                           <span>{item.label}</span>
                         </Link>
@@ -161,9 +163,7 @@ export function Navbar({ user }: NavbarProps) {
                   </Button>
                 </Link>
                 <Link href="/register">
-                  <Button className="cursor-pointer">
-                    Register
-                  </Button>
+                  <Button className="cursor-pointer">Register</Button>
                 </Link>
               </div>
             )}
@@ -177,10 +177,13 @@ export function Navbar({ user }: NavbarProps) {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="cursor-pointer"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? (
+                <X className="w-5 h-5" />
+              ) : (
+                <Menu className="w-5 h-5" />
+              )}
             </Button>
           </div>
-
         </div>
       </div>
 
@@ -211,8 +214,12 @@ export function Navbar({ user }: NavbarProps) {
             {user?.success ? (
               <div className="space-y-2">
                 <div className="px-3 py-2 bg-accent/50 rounded-md">
-                  <p className="text-sm font-semibold">{user.data?.profile.name}</p>
-                  <p className="text-xs text-muted-foreground">{user.data?.profile.email}</p>
+                  <p className="text-sm font-semibold">
+                    {user.data?.result.name}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {user.data?.result.email}
+                  </p>
                 </div>
                 <Link
                   href="/dashboard"
@@ -236,9 +243,7 @@ export function Navbar({ user }: NavbarProps) {
                   </Button>
                 </Link>
                 <Link href="/register" onClick={() => setMobileMenuOpen(false)}>
-                  <Button className="w-full cursor-pointer">
-                    Register
-                  </Button>
+                  <Button className="w-full cursor-pointer">Register</Button>
                 </Link>
               </div>
             )}

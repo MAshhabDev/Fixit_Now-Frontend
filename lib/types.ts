@@ -40,19 +40,20 @@ export interface Review {
   createdAt: string;
 }
 
+export type BookingStatus =
+  | "REQUESTED"
+  | "ACCEPTED"
+  | "DECLINED"
+  | "PAID"
+  | "IN_PROGRESS"
+  | "COMPLETED"
+  | "CANCELLED";
 // 5. Booking Item Interface
 export interface Booking {
   id: string;
   bookingDate: string;
   timeSlot: string;
-  status:
-    | "REQUESTED"
-    | "ACCEPTED"
-    | "DECLINED"
-    | "PAID"
-    | "IN_PROGRESS"
-    | "COMPLETED"
-    | "CANCELLED";
+  status: BookingStatus;
   totalAmount: number;
   serviceAddress: string;
   createdAt: string;
