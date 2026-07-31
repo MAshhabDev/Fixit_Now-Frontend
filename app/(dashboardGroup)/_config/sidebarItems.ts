@@ -57,7 +57,7 @@ export const TECHNICIAN_SIDEBAR_ITEMS: ISidebarItem[] = [
   },
   {
     label: "Profile Settings",
-    href: "/dashboard/technician/profile",
+    href: "/technician-dashboard/profile",
     icon: Settings,
   },
 ];
