@@ -52,7 +52,7 @@ export const TECHNICIAN_SIDEBAR_ITEMS: ISidebarItem[] = [
   },
   {
     label: "Availability Schedule",
-    href: "/dashboard/technician/schedule",
+    href: "/technician-dashboard/availability",
     icon: Clock,
   },
   {
