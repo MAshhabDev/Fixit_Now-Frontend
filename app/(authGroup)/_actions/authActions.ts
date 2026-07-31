@@ -93,11 +93,11 @@ export const LoginAction = async (
       
 
       if (userRole === "CUSTOMER") {
-        redirect("/dashboard/customer");
+        redirect("/dashboard");
       } else if (userRole === "TECHNICIAN") {
-        redirect("/dashboard/technician");
+        redirect("/technician-dashboard");
       } else if (userRole === "ADMIN") {
-        redirect("/dashboard/admin");
+        redirect("/admin-dashboard");
       }
     }
 

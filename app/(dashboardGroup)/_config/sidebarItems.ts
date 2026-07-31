@@ -46,8 +46,8 @@ export const TECHNICIAN_SIDEBAR_ITEMS: ISidebarItem[] = [
     icon: LayoutDashboard,
   },
   {
-    label: "Assigned Service Jobs",
-    href: "/dashboard/technician/jobs",
+    label: "Create Services",
+    href: "/technician-dashboard/create-services",
     icon: Wrench,
   },
   {

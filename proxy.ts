@@ -74,8 +74,8 @@ export async function proxy(request: NextRequest) {
     if (userRole === "CUSTOMER") {
       return NextResponse.redirect(new URL("/dashboard", request.url));
     }
-    if (userRole === "AUTHOR") {
-      return NextResponse.redirect(new URL("/author-dashboard", request.url));
+    if (userRole === "TECHNICIAN") {
+      return NextResponse.redirect(new URL("/technician-dashboard", request.url));
     }
     if (userRole === "ADMIN") {
       return NextResponse.redirect(new URL("/admin-dashboard", request.url));

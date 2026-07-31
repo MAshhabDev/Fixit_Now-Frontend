@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import {
@@ -18,14 +19,16 @@ import {
   CUSTOMER_SIDEBAR_ITEMS,
   TECHNICIAN_SIDEBAR_ITEMS,
   ADMIN_SIDEBAR_ITEMS,
-} from "../_config/sidebarItems"; 
+} from "../_config/sidebarItems";
 
 interface SidebarProps {
-  userRole: "CUSTOMER" | "TECHNICIAN" | "ADMIN";
+  user: any;
 }
 
-export default function DashboardSidebar({ userRole }: SidebarProps) {
+export default function DashboardSidebar({ user }: SidebarProps) {
   const pathname = usePathname();
+
+  const userRole = user?.data?.role || user?.data?.result?.role || "CUSTOMER";
 
   let navItems: ISidebarItem[] = CUSTOMER_SIDEBAR_ITEMS;
 
@@ -70,7 +73,10 @@ export default function DashboardSidebar({ userRole }: SidebarProps) {
                           : "text-muted-foreground hover:bg-accent hover:text-foreground"
                       }`}
                     >
-                      <Link href={item.href} className="flex items-center gap-2.5">
+                      <Link
+                        href={item.href}
+                        className="flex items-center gap-2.5"
+                      >
                         <Icon className="w-4 h-4" />
                         <span>{item.label}</span>
                       </Link>

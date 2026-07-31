@@ -1,5 +1,4 @@
 import { cookies } from "next/headers";
-import { de } from "zod/locales";
 
 const getMe = async () => {
   const cookieStore = await cookies();
@@ -18,14 +17,11 @@ const getMe = async () => {
       Cookie: `accessToken=${accessToken}`,
     },
 
-    cache: "force-cache",
-    next: {
-      revalidate: 60 * 60 * 24, // 1day
-      tags: ["my-profile"],
-    },
+    cache: "no-cache",
+   
   });
 
-  const result = res.json();
+  const result = await res.json();
 
   return result;
 };
