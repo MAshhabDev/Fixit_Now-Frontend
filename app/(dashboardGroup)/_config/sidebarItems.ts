@@ -74,13 +74,13 @@ export const ADMIN_SIDEBAR_ITEMS: ISidebarItem[] = [
     icon: Users,
   },
   {
-    label: "Category Control",
-    href: "/dashboard/admin/categories",
+    label: "Create Category",
+    href: "/admin-dashboard/category",
     icon: Grid,
   },
   {
-    label: "All Platform Bookings",
-    href: "/dashboard/admin/bookings",
+    label: "All Bookings",
+    href: "/admin-dashboard/bookings",
     icon: Calendar,
   },
 ];
