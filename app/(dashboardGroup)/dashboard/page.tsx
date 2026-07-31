@@ -1,11 +1,6 @@
-import CustomerDashboardPage from "../_components/DashboardSidebar"
+import { redirect } from "next/navigation";
 
-const userDashboardPage=()=>{
-    return(
-
-        <CustomerDashboardPage></CustomerDashboardPage>
-    )
+// মূল /dashboard রাউটে ঢুকলে অটোমেটিক রোল অনুযায়ী সঠিক ড্যাশবোর্ডে নিবে
+export default function DashboardPage() {
+  // redirect("/dashboard");
 }
-
-
-export default userDashboardPage

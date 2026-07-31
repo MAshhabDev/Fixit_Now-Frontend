@@ -178,7 +178,6 @@ export default function ServicesPage({
               </div>
             </div>
 
-            {/* TAB CONTENT 1: SERVICES GRID (আপনার ServiceCard ব্যবহার করে) */}
             {activeTab === "SERVICES" && (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {allServices.map((serviceItem) => (

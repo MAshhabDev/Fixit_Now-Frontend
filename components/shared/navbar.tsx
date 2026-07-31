@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import {
   DropdownMenu,
@@ -35,9 +35,9 @@ const navItems = [
 
 // User dropdown options
 const userMenuItems = [
-  { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { label: "My Bookings", href: "/dashboard/customer", icon: Calendar },
-  { label: "Profile & Settings", href: "/profile", icon: Settings },
+  { label: "Dashboard", icon: LayoutDashboard, action: "dashboard" },
+  { label: "Profile", icon: User, action: "profile" },
+  { label: "Settings", icon: Settings, action: "settings" },
 ];
 
 interface NavbarProps {
@@ -54,8 +54,22 @@ interface NavbarProps {
 }
 
 export function Navbar({ user }: NavbarProps) {
+  const router = useRouter();
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleUserMenuAction = async (action: string) => {
+    if (action === "dashboard") {
+      if (user?.data?.result.role === "CUSTOMER") {
+        router.push("dashboard");
+      } else if (user?.data?.result.role === "ADMIN") {
+        router.push("admin-dashboard");
+      }
+      if (user?.data?.result.role === "TECHNICIAN") {
+        router.push("technician-dashboard");
+      }
+    }
+  };
 
   return (
     <nav className="border-b border-border bg-background/95 backdrop-blur sticky top-0 z-50">
@@ -136,14 +150,14 @@ export function Navbar({ user }: NavbarProps) {
                   {userMenuItems.map((item) => {
                     const Icon = item.icon;
                     return (
-                      <DropdownMenuItem key={item.label} asChild>
-                        <Link
-                          href={item.href}
-                          className="cursor-pointer flex items-center"
-                        >
-                          <Icon className="w-4 h-4 mr-2 text-muted-foreground" />
-                          <span>{item.label}</span>
-                        </Link>
+                      <DropdownMenuItem
+                        onClick={() => handleUserMenuAction(item.action)}
+                        key={item.action}
+                        className="cursor-pointer"
+                        
+                      >
+                        <Icon className="w-4 h-4 mr-2 text-muted-foreground" />
+                        <span>{item.label}</span>
                       </DropdownMenuItem>
                     );
                   })}

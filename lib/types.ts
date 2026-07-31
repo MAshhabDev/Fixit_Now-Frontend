@@ -1,3 +1,8 @@
+import type { LucideProps } from "lucide-react";
+import { ForwardRefExoticComponent, RefAttributes } from "react";
+
+
+
 // 1. Category Interface
 export interface Category {
   id: string;
@@ -129,4 +134,20 @@ export type LoginResponse = {
     accessToken: string;
     refreshToken: string;
   };
+};
+
+export type ISidebarItem = {
+    label: string,
+    href: string,
+    icon: ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>
+}
+
+
+
+// Create Booking Request Payload
+export type CreateBooking = {
+  serviceId: string;
+  technicianId: string;
+  timeSlot: string;
+  serviceAddress: string;
 };

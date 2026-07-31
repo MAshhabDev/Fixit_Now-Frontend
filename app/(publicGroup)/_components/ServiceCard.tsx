@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Star, MapPin, ArrowRight, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { ServiceItem } from "@/lib/types";
+import { BookingDialog } from "./BookFormDialog";
 
 interface ServiceCardProps {
   service: ServiceItem;
@@ -79,12 +80,9 @@ export function ServiceCard({ service }: ServiceCardProps) {
           </p>
         </div>
 
-        <Link href={`/services/${""}`}>
-          <Button className="font-semibold rounded-xl text-xs px-4 py-2 flex items-center gap-1 cursor-pointer shadow-md transition-all hover:scale-105">
-            <span>Book Now</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Button>
-        </Link>
+        <div className="shrink-0">
+          <BookingDialog service={service} />
+        </div>
       </div>
     </div>
   );

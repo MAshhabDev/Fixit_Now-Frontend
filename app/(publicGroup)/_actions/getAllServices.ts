@@ -65,3 +65,29 @@ export const getAllTechnician = async () => {
 
   return result;
 };
+
+
+export const getSingleService = async () => {
+  const res = await fetch(
+    "https://fixit-now-backend-xjyr.onrender.com/api/technician",
+    {
+      headers: {
+        "content-type": "application/json",
+      },
+
+      cache: "no-store",
+      next: {
+        tags: ["all-categories"],
+      },
+    },
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch categories");
+  }
+  const result = await res.json();
+
+  return result;
+};
+
+
