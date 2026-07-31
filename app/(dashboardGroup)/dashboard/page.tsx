@@ -1,6 +1,9 @@
-import { redirect } from "next/navigation";
+import { BookingAction } from "./_actions/myBokking";
+import CustomerDashboardUI from "./_components/dashboardComponen";
 
-// মূল /dashboard রাউটে ঢুকলে অটোমেটিক রোল অনুযায়ী সঠিক ড্যাশবোর্ডে নিবে
-export default function DashboardPage() {
-  // redirect("/dashboard");
+export default async function CustomerDashboardPage() {
+  const bookingsRes = await BookingAction();
+  const bookings = bookingsRes?.data || [];
+
+  return <CustomerDashboardUI bookings={bookings} />;
 }
