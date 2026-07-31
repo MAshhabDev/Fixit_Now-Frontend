@@ -54,19 +54,42 @@ export type BookingStatus =
   | "COMPLETED"
   | "CANCELLED";
 // 5. Booking Item Interface
-export interface Booking {
+export interface BookingItem {
   id: string;
+  serviceId: string;
+  technicianId: string;
+  customerId: string;
   bookingDate: string;
   timeSlot: string;
-  status: BookingStatus;
-  totalAmount: number;
   serviceAddress: string;
+  totalAmount?: number;
+  status: BookingStatus;
   createdAt: string;
   updatedAt: string;
-  customerId: string;
-  technicianId: string;
-  serviceId: string;
-  review?: Review | null;
+  service?: {
+    id: string;
+    title: string;
+    description?: string;
+    price: number;
+    image?: string;
+    category?: {
+      id: string;
+      name: string;
+    };
+  };
+  technician?: {
+    id: string;
+    location?: string;
+    user?: {
+      name: string;
+      email: string;
+    };
+  };
+  review?: {
+    id: string;
+    rating: number;
+    comment: string;
+  } | null;
 }
 
 // 6. Main Service Item Interface

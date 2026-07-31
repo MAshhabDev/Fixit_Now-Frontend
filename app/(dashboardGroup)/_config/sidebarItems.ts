@@ -19,7 +19,7 @@ export const CUSTOMER_SIDEBAR_ITEMS: ISidebarItem[] = [
   },
   {
     label: "My Bookings",
-    href: "/dashboard/customer/bookings",
+    href: "/dashboard/my-booking",
     icon: Calendar,
   },
   {
