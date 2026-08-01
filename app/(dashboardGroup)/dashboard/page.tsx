@@ -1,5 +1,5 @@
 import { BookingAction } from "./_actions/myBokking";
-import CustomerDashboardUI from "./_components/dashboardComponen";
+import CustomerDashboardUI from "./_components/dashboardComponent";
 
 export default async function CustomerDashboardPage() {
   const bookingsRes = await BookingAction();

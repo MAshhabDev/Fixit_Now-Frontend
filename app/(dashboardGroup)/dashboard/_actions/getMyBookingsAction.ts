@@ -1,22 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import type { CreateBooking } from "@/lib/types";
 import { isAccessTokenExist } from "@/service/refreshToken";
-import { revalidateTag } from "next/cache";
 
-export const BookingAction = async (
-  prevState: CreateBooking,
-  formData: FormData,
-) => {
-  const payload = {
-    serviceId: formData.get("serviceId"),
-    technicianId: formData.get("technicianId"),
-    bookingDate: formData.get("bookingDate"),
-    timeSlot: formData.get("timeSlot"),
-    serviceAddress: formData.get("serviceAddress"),
-  };
-
+export const getMyBookingsAction = async () => {
   try {
     const accessToken = await isAccessTokenExist();
 
@@ -24,25 +11,21 @@ export const BookingAction = async (
       return {
         success: false,
         message: "User not logged in!",
+        data: [],
       };
     }
 
     const res = await fetch(`${process.env.BACKEND_API_URL}/api/bookings`, {
-      method: "POST",
+      method: "GET",
       headers: {
         Authorization: `Bearer ${accessToken}`,
         Cookie: `accessToken=${accessToken}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(payload),
+      cache: "no-store",
     });
 
     const result = await res.json();
-
-    if (result.success) {
-      revalidateTag("my-booking", { expire: 0 });
-    }
-
     return result;
   } catch (error: any) {
     if (error.message === "NEXT_REDIRECT") throw error;
@@ -50,7 +33,11 @@ export const BookingAction = async (
     return {
       success: false,
       statusCode: 500,
-      message: error.message || "Booking failed",
+      message: error.message || "No Booking Data",
+      data: [],
     };
   }
 };
+
+export const BookingAction = getMyBookingsAction;
+export const BookingsAction = getMyBookingsAction;

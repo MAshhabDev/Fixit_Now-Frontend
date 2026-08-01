@@ -1,9 +1,9 @@
-"use client";
+
 
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ShieldCheck, Clock, DollarSign, Headphones, ArrowRight, Sparkles, Award } from "lucide-react";
+import { ShieldCheck, Clock, DollarSign, Headphones, ArrowRight, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 

@@ -2,15 +2,8 @@
 "use server";
 
 import { isAccessTokenExist } from "@/service/refreshToken";
-import { revalidateTag } from "next/cache";
 
-export async function createCategoryAction(prevState: any, formData: FormData) {
-  const payload = {
-    name: formData.get("name"),
-    description: formData.get("description"),
-    icon: formData.get("icon"),
-  };
-
+export const getPaymentDetailsAction = async (paymentId: string) => {
   try {
     const accessToken = await isAccessTokenExist();
 
@@ -18,36 +11,30 @@ export async function createCategoryAction(prevState: any, formData: FormData) {
       return {
         success: false,
         message: "User not logged in!",
+        data: null,
       };
     }
 
     const res = await fetch(
-      `${process.env.BACKEND_API_URL}/api/admin/categories`,
+      `${process.env.BACKEND_API_URL}/api/payment/${paymentId}`,
       {
-        method: "POST",
+        method: "GET",
         headers: {
           Authorization: `Bearer ${accessToken}`,
           Cookie: `accessToken=${accessToken}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload),
-      },
+        cache: "no-store",
+      }
     );
 
     const result = await res.json();
-
-    if (result.success) {
-      revalidateTag("all-categories", { expire: 0 });
-    }
-
     return result;
   } catch (error: any) {
-    if (error.message === "NEXT_REDIRECT") throw error;
-
     return {
       success: false,
-      statusCode: 500,
-      message: error.message || "Failed to create category",
+      message: error.message || "Failed to fetch payment details",
+      data: null,
     };
   }
-}
+};

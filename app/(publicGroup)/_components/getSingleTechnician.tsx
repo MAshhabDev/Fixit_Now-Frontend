@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
+import Image from "next/image"; // 🟢 Next.js Image ইমপোর্ট
 import {
   User,
   ShieldCheck,
@@ -20,6 +21,7 @@ export default function SingleTechnicianUI({ tech }: SingleTechnicianUIProps) {
   const skillsList = tech?.skills ? tech.skills.split(",") : ["Home Service", "Repair"];
 
   const userImage = tech?.user?.image || tech?.image || null;
+  const [imgError, setImgError] = useState(false);
 
   return (
     <div className="min-h-screen bg-background py-10 px-4">
@@ -29,17 +31,16 @@ export default function SingleTechnicianUI({ tech }: SingleTechnicianUIProps) {
         <div className="bg-card border border-border rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
           
           <div className="flex items-center gap-4">
-            {/* 🟢 Avatar Image Circle */}
+            {/* 🟢 Avatar Image Circle with Next.js Image */}
             <div className="relative w-20 h-20 rounded-2xl overflow-hidden border-2 border-primary/20 bg-primary/10 shrink-0 flex items-center justify-center shadow-xs">
-              {userImage ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+              {userImage && !imgError ? (
+                <Image
+                  unoptimized
                   src={userImage}
                   alt={tech?.user?.name || "Technician"}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    (e.target as HTMLElement).style.display = "none";
-                  }}
+                  fill
+                  className="object-cover"
+                  onError={() => setImgError(true)}
                 />
               ) : (
                 <span className="font-black text-2xl text-primary">

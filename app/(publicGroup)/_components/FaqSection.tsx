@@ -1,4 +1,3 @@
-"use client";
 
 import React, { useState } from "react";
 import { ChevronDown, HelpCircle } from "lucide-react";
@@ -11,20 +10,20 @@ interface FaqItem {
 
 const faqs: FaqItem[] = [
   {
-    question: "পেমেন্ট কি কাজ শুরুর আগে নাকি কাজ শেষে দিতে হয়?",
-    answer: "টেকনিশিয়ান আপনার বুকিং রিকুয়েস্ট Accept করার পর আপনি অনলাইন গেটওয়েতে (Stripe/SSLCommerz) পেমেন্ট সম্পন্ন করবেন। পেমেন্ট সম্পন্ন হলে টেকনিশিয়ান কাজ শুরু (In-Progress) করবে।",
+    question: "Do I pay before or after the service is completed?",
+    answer: "Once the technician accepts your booking request, you can safely complete the payment via our online gateway. After payment confirmation, the technician begins the service.",
   },
   {
-    question: "বুকিং ক্যানসেল করার নিয়ম কি?",
-    answer: "কাজ ইন-প্রোগ্রেস (IN_PROGRESS) হওয়ার পূর্ব পর্যন্ত যেকোনো সময় আপনি আপনার কাস্টমার ড্যাশবোর্ড থেকে সহজেই বুকিং ক্যানসেল করতে পারবেন।",
+    question: "What is the cancellation policy for bookings?",
+    answer: "You can easily cancel your booking from your Customer Dashboard anytime before the service status changes to IN_PROGRESS.",
   },
   {
-    question: "টেকনিশিয়ানদের ব্যাকগ্রাউন্ড কিভাবে ভেরিফাই করা হয়?",
-    answer: "FixItNow-এর প্রতিটি টেকনিশিয়ানের জাতীয় পরিচয়পত্র (NID), কাজের পূর্ব অভিজ্ঞতার সার্টিফিকেট এবং শারীরিক ভেরিফিকেশন সম্পন্ন করার পর প্ল্যাটফর্মে অনুমোদন দেওয়া হয়।",
+    question: "How are technicians background-verified?",
+    answer: "Every technician on FixItNow undergoes mandatory background verification, including National ID (NID) checks, prior work experience certificates, and physical skill assessments before approval.",
   },
   {
-    question: "কোনো কারণে কাজ পছন্দ না হলে সমাধান কি?",
-    answer: "আমাদের ২৪/৭ সাপোর্ট টিম সব সময় সক্রিয় রয়েছে। আপনার যেকোনো অভিযোগ বা কাজের অসন্তোষ ড্যাশবোর্ড বা সাপোর্টে জানালে পুনরায় সার্ভিস বা রিফান্ড প্রসেস করা হয়।",
+    question: "What happens if I am not satisfied with the repair work?",
+    answer: "Our 24/7 support team is always ready to assist. If you face any issues or dissatisfaction with the work, report it via your dashboard or support hotline for a quick re-service or refund evaluation.",
   },
 ];
 

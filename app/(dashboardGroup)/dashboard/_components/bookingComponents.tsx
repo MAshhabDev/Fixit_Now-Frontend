@@ -76,19 +76,20 @@ export default function CustomerBookingListUI({ bookings = [] }: CustomerBooking
                     <span>৳{booking.totalAmount || booking.service?.price || 0}</span>
                   </p>
 
-                  {booking.status === "ACCEPTED" && (
-                    <Button
-                      size="sm"
-                      onClick={() => handlePay(booking.id)}
-                      className="rounded-xl text-xs font-bold px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white shadow-md flex items-center gap-1.5 cursor-pointer"
-                    >
-                      <CreditCard className="w-3.5 h-3.5" />
-                      <span>Pay Now</span>
-                    </Button>
-                  )}
+                  <div className="flex items-center gap-2">
+                    {booking.status === "ACCEPTED" && (
+                      <Button
+                        size="sm"
+                        onClick={() => handlePay(booking.id)}
+                        className="rounded-xl text-xs font-bold px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white shadow-md flex items-center gap-1.5 cursor-pointer"
+                      >
+                        <CreditCard className="w-3.5 h-3.5" />
+                        <span>Pay Now</span>
+                      </Button>
+                    )}
 
                     <BookingDetailsDialog bookingId={booking.id} initialBooking={booking} />
-
+                  </div>
 
                   {booking.status === "PAID" && (
                     <span className="text-[11px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950 px-2.5 py-1 rounded-lg border border-emerald-200">
@@ -110,3 +111,5 @@ export default function CustomerBookingListUI({ bookings = [] }: CustomerBooking
     </div>
   );
 }
+
+export const MyBookingsPage = CustomerBookingListUI;

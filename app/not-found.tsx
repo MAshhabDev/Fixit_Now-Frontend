@@ -25,7 +25,7 @@ export default function NotFound() {
           </h1>
           
           <p className="text-xs text-muted-foreground leading-relaxed">
-            The page or service route you are looking for doesn't exist or might have been moved.
+            The page or service route you are looking for does not exist or might have been moved.
           </p>
         </div>
 
