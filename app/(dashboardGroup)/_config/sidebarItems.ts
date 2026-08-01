@@ -28,6 +28,11 @@ export const CUSTOMER_SIDEBAR_ITEMS: ISidebarItem[] = [
     icon: CreditCard,
   },
   {
+    label: "Payment Details",
+    href: "/dashboard/payment-details",
+    icon: CreditCard,
+  },
+  {
     label: "My Reviews",
     href: "/dashboard/customer/reviews",
     icon: Star,
