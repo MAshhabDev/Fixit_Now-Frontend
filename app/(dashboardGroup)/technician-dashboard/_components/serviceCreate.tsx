@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Wrench, PlusCircle, Tag, Clock, DollarSign } from "lucide-react";
+import { Wrench, PlusCircle, Tag, Clock, DollarSign, ImageIcon } from "lucide-react";
 import { toast } from "sonner";
 import { createServices } from "../_actions/serviceCreateAction";
 
@@ -58,6 +58,18 @@ export default function CreateServiceForm({ categories = [] }: CreateServiceForm
                 name="title"
                 required
                 placeholder="e.g. Electry Line Repair"
+                className="rounded-xl text-xs"
+              />
+            </div>
+
+             <div className="space-y-2">
+              <Label htmlFor="image" className="text-xs font-semibold flex items-center gap-1">
+                <ImageIcon className="w-3.5 h-3.5 text-primary" /> Service Cover Image URL
+              </Label>
+              <Input
+                id="image"
+                name="image"
+                placeholder="e.g. https://images.unsplash.com/photo-1621905251189-08b45d6a269e"
                 className="rounded-xl text-xs"
               />
             </div>

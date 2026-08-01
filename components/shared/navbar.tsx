@@ -23,6 +23,8 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import { logout } from "@/service/logout";
+import { toast } from "sonner";
 
 // Nav items for FixItNow
 const navItems = [
@@ -68,6 +70,12 @@ export function Navbar({ user }: NavbarProps) {
       if (user?.data?.result.role === "TECHNICIAN") {
         router.push("technician-dashboard");
       }
+    }
+
+    if (action === "logout") {
+      await logout();
+      toast.success("User Logged Out Successfully!");
+      router.push("/login");
     }
   };
 
@@ -154,7 +162,6 @@ export function Navbar({ user }: NavbarProps) {
                         onClick={() => handleUserMenuAction(item.action)}
                         key={item.action}
                         className="cursor-pointer"
-                        
                       >
                         <Icon className="w-4 h-4 mr-2 text-muted-foreground" />
                         <span>{item.label}</span>
@@ -163,7 +170,10 @@ export function Navbar({ user }: NavbarProps) {
                   })}
 
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem className="cursor-pointer text-destructive focus:text-destructive">
+                  <DropdownMenuItem
+                    onClick={() => handleUserMenuAction("logout")}
+                    className="cursor-pointer text-destructive focus:text-destructive"
+                  >
                     <LogOut className="w-4 h-4 mr-2" />
                     <span>Log out</span>
                   </DropdownMenuItem>

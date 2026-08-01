@@ -53,7 +53,7 @@ export const getAllTechnician = async () => {
 
       cache: "no-store",
       next: {
-        tags: ["all-categories"],
+        tags: ["all-technician"],
       },
     },
   );

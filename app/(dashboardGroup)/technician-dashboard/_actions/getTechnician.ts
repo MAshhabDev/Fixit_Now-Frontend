@@ -1,16 +1,10 @@
-"use server"
+"use server";
 
-
-import type { CreateBooking } from "@/lib/types";
 import { getNewAccessToken } from "@/service/refreshToken";
 import { jwtUtils } from "@/utils/jwt";
-import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
-export const getTechnician = async (
- 
-) => {
-  
+export const getTechnician = async () => {
   try {
     const cookieStore = await cookies();
 
@@ -18,11 +12,10 @@ export const getTechnician = async (
     const refreshToken = cookieStore.get("refreshToken")?.value || null;
 
     if (!accessToken && !refreshToken) {
-      // throw new Error("User Not Logged In!");
-
       return {
         success: false,
         message: "User not logged in!",
+        data: [],
       };
     }
 
@@ -41,7 +34,6 @@ export const getTechnician = async (
       : null;
 
     if (!decodedAccessToken?.success && decodedRefreshToken?.success) {
-      //access token has expired but refresh token is valid, get new access token from backend
       const result = await getNewAccessToken();
 
       if (result.success) {
@@ -60,20 +52,16 @@ export const getTechnician = async (
     const res = await fetch(`${process.env.BACKEND_API_URL}/api/technician/bookings`, {
       method: "GET",
       headers: {
-        // Authorization : accessToken as unknown as string,
-        // Authorization : `${accessToken}`,
         Authorization: `Bearer ${accessToken}`,
-
         Cookie: `accessToken=${accessToken}`,
         "Content-Type": "application/json",
       },
+      cache: "no-store",
     });
 
     const result = await res.json();
-
-
     return result;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     if (error.message === "NEXT_REDIRECT") throw error;
 
@@ -81,6 +69,7 @@ export const getTechnician = async (
       success: false,
       statusCode: 500,
       message: error.message || "No Booking Data",
+      data: [],
     };
   }
 };

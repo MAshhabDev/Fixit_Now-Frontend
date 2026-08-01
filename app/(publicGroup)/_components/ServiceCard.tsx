@@ -18,7 +18,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
         <div className="relative w-full aspect-[16/10] overflow-hidden bg-muted">
           <Image
             unoptimized
-            src={""}
+            src={service.image || "https://images.unsplash.com/photo-1621905251189-08b45d6a269e"}
             alt={service.title}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-105"

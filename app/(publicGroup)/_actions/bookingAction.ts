@@ -11,12 +11,13 @@ export const BookingAction = async (
   prevState: CreateBooking,
   formData: FormData,
 ) => {
-  const payload = {
-    serviceId: formData.get("serviceId"),
-    technicianId: formData.get("technicianId"),
-    timeSlot: formData.get("timeSlot"),
-    serviceAddress: formData.get("serviceAddress"),
-  };
+const payload = {
+  serviceId: formData.get("serviceId"),
+  technicianId: formData.get("technicianId"),
+  bookingDate: formData.get("bookingDate"), 
+  timeSlot: formData.get("timeSlot"),
+  serviceAddress: formData.get("serviceAddress"),
+};
   try {
     const cookieStore = await cookies();
 

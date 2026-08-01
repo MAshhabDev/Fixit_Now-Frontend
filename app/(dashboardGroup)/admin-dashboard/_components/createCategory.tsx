@@ -62,7 +62,7 @@ export default function CategoryFormUI({ categories = [] }: CategoryUIProps) {
                 />
               </div>
 
-              {/* <div className="space-y-2">
+              <div className="space-y-2">
                 <Label htmlFor="icon" className="text-xs font-semibold">Icon / Image URL</Label>
                 <Input
                   id="icon"
@@ -70,7 +70,7 @@ export default function CategoryFormUI({ categories = [] }: CategoryUIProps) {
                   placeholder="e.g. https://images.unsplash.com/..."
                   className="rounded-xl text-xs"
                 />
-              </div> */}
+              </div>
             </div>
 
             <div className="space-y-2">

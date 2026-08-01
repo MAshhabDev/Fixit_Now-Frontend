@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useTransition } from "react";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { updateUserStatusAction, verifyTechnicianAction } from "../_actions/updateUserAction";
@@ -11,25 +11,26 @@ interface AdminUserUIProps {
 }
 
 export default function AdminUserManagementUI({ users = [] }: AdminUserUIProps) {
-  const [isPending, startTransition] = useTransition();
-
-  // 🟢 Block / Unblock Handler
-  const handleToggleBlock = (userId: string, currentStatus: string) => {
+  
+  const handleToggleBlock = async (userId: string, currentStatus: string) => {
     const newStatus = currentStatus === "ACTIVE" ? "BLOCKED" : "ACTIVE";
-    startTransition(async () => {
-      const res = await updateUserStatusAction(userId, newStatus);
-      if (res?.success) toast.success(`User set to ${newStatus}`);
-      else toast.error(res?.message || "Failed to update status");
-    });
+    const res = await updateUserStatusAction(userId, newStatus);
+
+    if (res?.success) {
+      toast.success(`User status updated to ${newStatus}!`);
+    } else {
+      toast.error(res?.message || "Failed to update status");
+    }
   };
 
-  // 🟢 Verify Technician Handler
-  const handleVerifyTechnician = (techId: string) => {
-    startTransition(async () => {
-      const res = await verifyTechnicianAction(techId);
-      if (res?.success) toast.success("Technician verified successfully!");
-      else toast.error(res?.message || "Failed to verify technician");
-    });
+  const handleVerifyTechnician = async (techId: string) => {
+    const res = await verifyTechnicianAction(techId);
+
+    if (res?.success) {
+      toast.success("Technician verified successfully!");
+    } else {
+      toast.error(res?.message || "Failed to verify technician");
+    }
   };
 
   return (
@@ -42,7 +43,7 @@ export default function AdminUserManagementUI({ users = [] }: AdminUserUIProps) 
           <p className="text-xs text-muted-foreground">Manage user access and verify technician accounts.</p>
         </div>
 
-        {/* Clean Single Table */}
+        {/* User Table */}
         <div className="bg-card border border-border rounded-xl overflow-hidden shadow-sm">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
@@ -60,16 +61,16 @@ export default function AdminUserManagementUI({ users = [] }: AdminUserUIProps) 
                   users.map((u) => (
                     <tr key={u.id} className="hover:bg-accent/30">
                       
-                      {/* 1. User Details */}
+                      {/* User Info */}
                       <td className="p-3 font-semibold text-foreground">
                         <p className="font-bold text-sm text-foreground">{u.name}</p>
                         <p className="text-[11px] text-muted-foreground font-normal">{u.email}</p>
                       </td>
 
-                      {/* 2. Role */}
+                      {/* Role */}
                       <td className="p-3 font-bold uppercase">{u.role}</td>
 
-                      {/* 3. Status */}
+                      {/* Status */}
                       <td className="p-3">
                         <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase ${
                           u.status === "ACTIVE" ? "bg-emerald-100 text-emerald-700" : "bg-destructive/10 text-destructive"
@@ -78,7 +79,7 @@ export default function AdminUserManagementUI({ users = [] }: AdminUserUIProps) 
                         </span>
                       </td>
 
-                      {/* 🟢 4. Verification Column (এখানে সরাসরি বাটন বা Verified ব্যাজ থাকবে) */}
+                      {/* Verification Column */}
                       <td className="p-3 font-semibold">
                         {u.role === "TECHNICIAN" ? (
                           u.technician?.isVerified ? (
@@ -88,9 +89,8 @@ export default function AdminUserManagementUI({ users = [] }: AdminUserUIProps) 
                           ) : u.technician?.id ? (
                             <Button
                               size="sm"
-                              disabled={isPending}
                               onClick={() => handleVerifyTechnician(u.technician.id)}
-                              className="text-[11px] font-bold px-3 py-1 bg-primary text-primary-foreground hover:bg-primary/90"
+                              className="text-[11px] font-bold px-3 py-1 bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer"
                             >
                               Verify Tech
                             </Button>
@@ -102,13 +102,12 @@ export default function AdminUserManagementUI({ users = [] }: AdminUserUIProps) 
                         )}
                       </td>
 
-                      {/* 5. Block / Unblock Action Column */}
+                      {/* Block / Unblock Action */}
                       <td className="p-3 text-right">
                         <Button
                           size="sm"
-                          disabled={isPending}
                           onClick={() => handleToggleBlock(u.id, u.status)}
-                          className={`text-xs font-bold ${
+                          className={`text-xs font-bold cursor-pointer ${
                             u.status === "ACTIVE" ? "bg-destructive text-white" : "bg-emerald-600 text-white"
                           }`}
                         >

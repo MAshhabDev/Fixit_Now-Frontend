@@ -15,6 +15,7 @@ export const createServices = async (prevState: any, formData: FormData) => {
       price: Number(formData.get("price")),
       duration: formData.get("duration"),
       categoryId: formData.get("categoryId"),
+      image: formData.get("image"),
     };
 
     let accessToken = cookieStore.get("accessToken")?.value || null;
