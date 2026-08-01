@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { CreditCard, Calendar, MapPin, DollarSign } from "lucide-react";
 import { toast } from "sonner";
 import { PaymentAction } from "../_actions/paymentAction";
+import { BookingDetailsDialog } from "./getBookingDetails";
 
 interface CustomerBookingListProps {
   bookings: any[];
@@ -85,6 +86,9 @@ export default function CustomerBookingListUI({ bookings = [] }: CustomerBooking
                       <span>Pay Now</span>
                     </Button>
                   )}
+
+                    <BookingDetailsDialog bookingId={booking.id} initialBooking={booking} />
+
 
                   {booking.status === "PAID" && (
                     <span className="text-[11px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950 px-2.5 py-1 rounded-lg border border-emerald-200">

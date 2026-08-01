@@ -30,7 +30,6 @@ export function BookingDialog({ service }: BookingDialogProps) {
 
   const router = useRouter();
 
-  // 🟢 BookingAction যুক্ত করা হলো
   const [state, formAction, pending] = useActionState(
     BookingAction,
     null,
@@ -47,7 +46,7 @@ export function BookingDialog({ service }: BookingDialogProps) {
     } else if (state.message) {
       toast.error(state.message);
     }
-  }, [state]);
+  }, [state,router]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
