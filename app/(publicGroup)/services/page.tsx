@@ -36,7 +36,6 @@ const servicePage = async () => {
         <ServicesPage
           allServices={allServices}
           allCategories={allCategories}
-          allTechnician={allTechnician}
         ></ServicesPage>
       </div>
     </div>
