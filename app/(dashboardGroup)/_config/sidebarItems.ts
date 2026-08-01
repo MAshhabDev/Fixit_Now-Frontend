@@ -24,7 +24,7 @@ export const CUSTOMER_SIDEBAR_ITEMS: ISidebarItem[] = [
   },
   {
     label: "Payment History",
-    href: "/dashboard/customer/payments",
+    href: "/dashboard/payment-history",
     icon: CreditCard,
   },
   {
@@ -32,7 +32,6 @@ export const CUSTOMER_SIDEBAR_ITEMS: ISidebarItem[] = [
     href: "/dashboard/customer/reviews",
     icon: Star,
   },
-
 ];
 
 export const TECHNICIAN_SIDEBAR_ITEMS: ISidebarItem[] = [
