@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { User, MapPin, DollarSign, Briefcase, Award, Save, Clock, Tag } from "lucide-react";
 import { toast } from "sonner";
-import { updateProfileActions } from "../_actions/profileAction";
+import { updateProfileAction } from "../_actions/profileAction";
 
 interface ProfileFormProps {
   categories: any[];
@@ -17,7 +17,7 @@ interface ProfileFormProps {
 }
 
 export default function ProfileForm({ categories = [], defaultCategoryId }: ProfileFormProps) {
-  const [state, formAction, pending] = useActionState(updateProfileActions, null) as any;
+  const [state, formAction, pending] = useActionState(updateProfileAction, null) as any;
 
   useEffect(() => {
     if (!state) return;

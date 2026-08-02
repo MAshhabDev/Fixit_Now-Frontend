@@ -9,6 +9,7 @@ import {
   CreditCard,
   Star,
   Clock,
+  MemoryStickIcon,
 } from "lucide-react";
 
 export const CUSTOMER_SIDEBAR_ITEMS: ISidebarItem[] = [
@@ -45,11 +46,17 @@ export const TECHNICIAN_SIDEBAR_ITEMS: ISidebarItem[] = [
     href: "/technician-dashboard",
     icon: LayoutDashboard,
   },
-  {
+   {
     label: "Create Services",
     href: "/technician-dashboard/create-services",
     icon: Wrench,
   },
+  {
+    label: "My Services",
+    href: "/technician-dashboard/my-services",
+    icon: MemoryStickIcon,
+  },
+ 
   {
     label: "Availability Schedule",
     href: "/technician-dashboard/availability",

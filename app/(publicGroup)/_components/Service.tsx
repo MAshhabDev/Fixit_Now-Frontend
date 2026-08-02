@@ -28,6 +28,9 @@ export default function ServicesPage({
   const maxPrice =
     typeof search?.maxPrice === "string" ? search.maxPrice : "All";
 
+  const location =
+    typeof search?.location === "string" ? search.location : "All";
+
   const filteredServices = allServices.filter((serviceItem: any) => {
     const matchesCategory =
       category === "All" || serviceItem?.category?.name === category;
@@ -40,7 +43,10 @@ export default function ServicesPage({
     const matchesPrice =
       maxPrice === "All" || Number(serviceItem?.price) <= Number(maxPrice);
 
-    return matchesCategory && matchesQuery && matchesPrice;
+    const matchesLocation =
+      location === "All Locations" || serviceItem?.technician?.location;
+
+    return matchesCategory && matchesQuery && matchesPrice && matchesLocation;
   });
 
   const handleClick = (key: string, value: string) => {
@@ -130,13 +136,18 @@ export default function ServicesPage({
             </div>
 
             {/* Location Selector UI */}
+            {/* Location Selector UI */}
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-foreground">
                 Location
               </label>
               <div className="relative">
                 <MapPin className="w-4 h-4 absolute left-3 top-2.5 text-muted-foreground" />
-                <select className="w-full bg-background border border-border rounded-xl pl-9 pr-3 py-2 text-xs font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 appearance-none cursor-pointer">
+                <select
+                  value={location}
+                  onChange={(e) => handleClick("location", e.target.value)}
+                  className="w-full bg-background border border-border rounded-xl pl-9 pr-3 py-2 text-xs font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 appearance-none cursor-pointer"
+                >
                   <option value="All">All Locations</option>
                   <option value="Dhaka">Dhaka</option>
                   <option value="Gulshan">Gulshan</option>
@@ -189,7 +200,6 @@ export default function ServicesPage({
               </div>
             </div>
 
-            {/* 🟢 Services Grid: filteredServices দিয়ে ম্যাপ করা */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredServices.length > 0 ? (
                 filteredServices.map((serviceItem) => (
