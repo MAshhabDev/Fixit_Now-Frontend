@@ -7,6 +7,7 @@ import { CreditCard, Calendar, MapPin, DollarSign } from "lucide-react";
 import { toast } from "sonner";
 import { PaymentAction } from "../_actions/paymentAction";
 import { BookingDetailsDialog } from "./getBookingDetails";
+import { ReviewDialog } from "./ReviewDialog";
 
 interface CustomerBookingListProps {
   bookings: any[];
@@ -28,7 +29,7 @@ export default function CustomerBookingListUI({ bookings = [] }: CustomerBooking
         {/* Header */}
         <div className="border-b border-border pb-3">
           <h1 className="text-xl font-bold text-foreground">My Service Bookings</h1>
-          <p className="text-xs text-muted-foreground">Track your requested home services and payment status.</p>
+          <p className="text-xs text-muted-foreground">Track your requested home services, payment status, and leave reviews.</p>
         </div>
 
         {/* Bookings List */}
@@ -86,6 +87,10 @@ export default function CustomerBookingListUI({ bookings = [] }: CustomerBooking
                         <CreditCard className="w-3.5 h-3.5" />
                         <span>Pay Now</span>
                       </Button>
+                    )}
+
+                    {(booking.status === "PAID" || booking.status === "COMPLETED") && (
+                      <ReviewDialog bookingId={booking.id} serviceId={booking.serviceId} />
                     )}
 
                     <BookingDetailsDialog bookingId={booking.id} initialBooking={booking} />

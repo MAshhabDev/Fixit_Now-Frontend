@@ -33,7 +33,6 @@ export function BookingDetailsDialog({ bookingId, initialBooking }: BookingDetai
   const [loading, setLoading] = useState(false);
   const [booking, setBooking] = useState<any>(initialBooking || null);
 
-  // 🟢 Modal Open Trigger Fetch
   const handleOpenChange = async (isOpen: boolean) => {
     setOpen(isOpen);
     if (isOpen && !booking) {
