@@ -6,10 +6,10 @@ export const getAllServices = async () => {
         "content-type": "application/json",
       },
 
-      cache: "no-store",
       next: {
-        tags: ["all-services"],
-      },
+          revalidate: 60,
+          tags: ["all-services"],
+        },
     },
   );
 
@@ -29,10 +29,10 @@ export const getAllCategories = async () => {
         "content-type": "application/json",
       },
 
-      cache: "no-store",
       next: {
-        tags: ["all-categories"],
-      },
+          revalidate: 60,
+          tags: ["all-categories"],
+        },
     },
   );
 
@@ -51,10 +51,10 @@ export const getAllTechnician = async () => {
         "content-type": "application/json",
       },
 
-      cache: "no-store",
       next: {
-        tags: ["all-technician"],
-      },
+          revalidate: 60,
+          tags: ["all-technician"],
+        },
     },
   );
 

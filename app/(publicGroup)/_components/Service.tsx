@@ -1,38 +1,63 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useState } from "react";
-import {
-  Search,
-  MapPin,
-  Filter,
-  SlidersHorizontal,
-  Wrench,
-  X,
-} from "lucide-react";
+import React from "react";
+import { Search, MapPin, Filter, SlidersHorizontal, X } from "lucide-react";
 import { ServiceCard } from "./ServiceCard";
 import type { Category, ServiceItem } from "@/lib/types";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface ServiceProps {
+  search?: { [key: string]: string | string[] | undefined };
   allServices: ServiceItem[];
   allCategories: Category[];
 }
 
 export default function ServicesPage({
+  search,
   allServices = [],
   allCategories = [],
 }: ServiceProps) {
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const query = typeof search?.query === "string" ? search.query : "";
+  const category =
+    typeof search?.category === "string" ? search.category : "All";
+  const maxPrice =
+    typeof search?.maxPrice === "string" ? search.maxPrice : "All";
+
+  const filteredServices = allServices.filter((serviceItem: any) => {
+    const matchesCategory =
+      category === "All" || serviceItem?.category?.name === category;
+
+    const matchesQuery =
+      !query ||
+      serviceItem?.title?.toLowerCase().includes(query.toLowerCase()) ||
+      serviceItem?.description?.toLowerCase().includes(query.toLowerCase());
+
+    const matchesPrice =
+      maxPrice === "All" || Number(serviceItem?.price) <= Number(maxPrice);
+
+    return matchesCategory && matchesQuery && matchesPrice;
+  });
+
+  const handleClick = (key: string, value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (value && value !== "All") {
+      params.set(key, value);
+    } else {
+      params.delete(key);
+    }
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  };
 
   return (
     <div className="min-h-screen bg-background py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        
-        
-
         {/* MAIN CONTENT (SIDEBAR + GRID) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start pt-4">
-          
           {/* LEFT SIDEBAR FILTER PANEL UI */}
           <aside className="lg:col-span-3 bg-card border border-border p-5 rounded-2xl shadow-sm space-y-6">
             <div className="flex items-center justify-between border-b border-border pb-3">
@@ -40,8 +65,8 @@ export default function ServicesPage({
                 <Filter className="w-4 h-4 text-primary" />
                 <span>Filters</span>
               </h3>
-              <button 
-                onClick={() => setSelectedCategory("All")}
+              <button
+                onClick={() => router.replace(pathname)}
                 className="text-xs text-destructive hover:underline font-semibold flex items-center gap-1 cursor-pointer"
               >
                 <X className="w-3.5 h-3.5" /> Reset
@@ -57,6 +82,8 @@ export default function ServicesPage({
                 <Search className="w-4 h-4 absolute left-3 top-3 text-muted-foreground" />
                 <input
                   type="text"
+                  defaultValue={query}
+                  onChange={(e) => handleClick("query", e.target.value)}
                   placeholder="Search wiring, plumbing..."
                   className="w-full bg-background border border-border rounded-xl pl-9 pr-3 py-2 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-primary/50"
                 />
@@ -70,15 +97,15 @@ export default function ServicesPage({
               </label>
               <div className="space-y-1">
                 <button
-                  onClick={() => setSelectedCategory("All")}
+                  onClick={() => handleClick("category", "All")}
                   className={`w-full text-left px-3 py-2 rounded-xl text-xs font-medium transition-colors flex items-center justify-between ${
-                    selectedCategory === "All"
+                    category === "All"
                       ? "bg-primary/10 text-primary font-bold border border-primary/20"
                       : "text-muted-foreground hover:bg-accent hover:text-foreground"
                   }`}
                 >
                   <span>All Categories</span>
-                  {selectedCategory === "All" && (
+                  {category === "All" && (
                     <span className="w-2 h-2 rounded-full bg-primary" />
                   )}
                 </button>
@@ -86,15 +113,15 @@ export default function ServicesPage({
                 {allCategories.map((cat) => (
                   <button
                     key={cat.id}
-                    onClick={() => setSelectedCategory(cat.name)}
+                    onClick={() => handleClick("category", cat.name)}
                     className={`w-full text-left px-3 py-2 rounded-xl text-xs font-medium transition-colors flex items-center justify-between ${
-                      selectedCategory === cat.name
+                      category === cat.name
                         ? "bg-primary/10 text-primary font-bold border border-primary/20"
                         : "text-muted-foreground hover:bg-accent hover:text-foreground"
                     }`}
                   >
                     <span>{cat.name}</span>
-                    {selectedCategory === cat.name && (
+                    {category === cat.name && (
                       <span className="w-2 h-2 rounded-full bg-primary" />
                     )}
                   </button>
@@ -126,7 +153,11 @@ export default function ServicesPage({
               </label>
               <div className="relative">
                 <SlidersHorizontal className="w-4 h-4 absolute left-3 top-2.5 text-muted-foreground" />
-                <select className="w-full bg-background border border-border rounded-xl pl-9 pr-3 py-2 text-xs font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 appearance-none cursor-pointer">
+                <select
+                  value={maxPrice}
+                  onChange={(e) => handleClick("maxPrice", e.target.value)}
+                  className="w-full bg-background border border-border rounded-xl pl-9 pr-3 py-2 text-xs font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 appearance-none cursor-pointer"
+                >
                   <option value="All">Any Price</option>
                   <option value="500">Under ৳500</option>
                   <option value="1000">Under ৳1000</option>
@@ -138,11 +169,12 @@ export default function ServicesPage({
 
           {/* RIGHT MAIN DISPLAY SERVICES GRID */}
           <main className="lg:col-span-9 space-y-6">
-            
             {/* Top Bar */}
             <div className="bg-card border border-border p-4 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
               <p className="text-xs font-semibold text-muted-foreground">
-                Showing Services in <span className="text-primary font-bold">{selectedCategory}</span>
+                Showing Services in{" "}
+                <span className="text-primary font-bold">{category}</span> (
+                {filteredServices.length})
               </p>
 
               <div className="flex items-center gap-2">
@@ -157,22 +189,20 @@ export default function ServicesPage({
               </div>
             </div>
 
-            {/* Services Grid */}
+            {/* 🟢 Services Grid: filteredServices দিয়ে ম্যাপ করা */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {allServices.length > 0 ? (
-                allServices.map((serviceItem) => (
+              {filteredServices.length > 0 ? (
+                filteredServices.map((serviceItem) => (
                   <ServiceCard key={serviceItem.id} service={serviceItem} />
                 ))
               ) : (
                 <div className="col-span-full text-center py-12 bg-card border border-border rounded-2xl text-xs text-muted-foreground">
-                  No services available in this category.
+                  No services available matching your search criteria.
                 </div>
               )}
             </div>
-
           </main>
         </div>
-
       </div>
     </div>
   );

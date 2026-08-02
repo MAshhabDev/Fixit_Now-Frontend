@@ -1,19 +1,22 @@
 import { Wrench } from "lucide-react";
 import ServicesPage from "../_components/Service";
-import {
-  getAllCategories,
-  getAllServices,
-  getAllTechnician,
-} from "../_actions/getAllServices";
+import { getAllCategories, getAllServices } from "../_actions/getAllServices";
 
-const servicePage = async () => {
+const servicePage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) => {
+  const search = await searchParams;
+
+
   const servicesRes = await getAllServices();
   const categoriesRes = await getAllCategories();
-  const technicianRes = await getAllTechnician();
 
   const allServices = servicesRes?.data || [];
   const allCategories = categoriesRes?.data || [];
-  const allTechnician = technicianRes?.data || [];
+
+
   return (
     <div className="min-h-screen bg-background py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
@@ -34,6 +37,7 @@ const servicePage = async () => {
           </p>
         </div>
         <ServicesPage
+          search={search}
           allServices={allServices}
           allCategories={allCategories}
         ></ServicesPage>
