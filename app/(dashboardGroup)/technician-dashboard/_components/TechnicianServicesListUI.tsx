@@ -112,7 +112,7 @@ export default function TechnicianServicesListUI({
                       </AlertDialogTitle>
                       <AlertDialogDescription className="text-xs">
                         This action cannot be undone. This will permanently delete
-                        the service <span className="font-bold text-foreground">"{item.title}"</span> from your profile.
+                        the service <span className="font-bold text-foreground">{item.title}</span> from your profile.
                       </AlertDialogDescription>
                     </AlertDialogHeader>
 

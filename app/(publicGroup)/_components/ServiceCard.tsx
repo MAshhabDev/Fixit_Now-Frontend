@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
-import { Star, MapPin, ShieldCheck } from "lucide-react";
-import { BookingDialog } from "./BookFormDialog";
+import Link from "next/link";
+import { Star, MapPin, ShieldCheck, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface ServiceCardProps {
   service: any;
@@ -14,7 +15,6 @@ export function ServiceCard({ service }: ServiceCardProps) {
   return (
     <div className="group relative rounded-2xl bg-card border border-border overflow-hidden shadow-sm hover:shadow-xl hover:border-primary/40 transition-all duration-300 flex flex-col justify-between">
       <div>
-        {/* ================= 1. Service Image & Category Badge ================= */}
         <div className="relative w-full aspect-[16/10] overflow-hidden bg-muted">
           <Image
             unoptimized
@@ -47,10 +47,11 @@ export function ServiceCard({ service }: ServiceCardProps) {
 
         {/* ================= 2. Content Body ================= */}
         <div className="p-5 space-y-4">
-          {/* Title */}
-          <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors line-clamp-1">
-            {service?.title}
-          </h3>
+          <Link href={`/services/${service.id}`}>
+            <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors line-clamp-1 cursor-pointer">
+              {service?.title}
+            </h3>
+          </Link>
 
           {/* Top Technician Info */}
           {techUser && (
@@ -72,8 +73,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
         </div>
       </div>
 
-      {/* ================= 3. Footer Price & CTA ================= */}
-      <div className="p-5 pt-0 flex items-center justify-between gap-2 border-t border-border/60 mt-2 pt-4">
+      <div className="p-5 flex items-center justify-between gap-2 border-t border-border/60 mt-2 pt-4">
         <div>
           <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
             Starting from
@@ -84,7 +84,15 @@ export function ServiceCard({ service }: ServiceCardProps) {
         </div>
 
         <div className="shrink-0">
-          <BookingDialog service={service} />
+          <Link href={`/services/${service?.id}`}>
+            <Button
+              size="sm"
+              className="rounded-xl text-xs font-bold bg-primary hover:bg-primary/90 text-white cursor-pointer px-4 flex items-center gap-1"
+            >
+              <span>View Details</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

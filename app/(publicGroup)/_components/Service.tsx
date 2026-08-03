@@ -27,7 +27,6 @@ export default function ServicesPage({
     typeof search?.category === "string" ? search.category : "All";
   const maxPrice =
     typeof search?.maxPrice === "string" ? search.maxPrice : "All";
-
   const location =
     typeof search?.location === "string" ? search.location : "All";
 
@@ -44,7 +43,13 @@ export default function ServicesPage({
       maxPrice === "All" || Number(serviceItem?.price) <= Number(maxPrice);
 
     const matchesLocation =
-      location === "All Locations" || serviceItem?.technician?.location;
+      location === "All Locations" ||
+      location === "All" ||
+      !location ||
+      serviceItem?.technician?.location
+        ?.toLowerCase()
+        .includes(location.toLowerCase()) ||
+      serviceItem?.location?.toLowerCase().includes(location.toLowerCase());
 
     return matchesCategory && matchesQuery && matchesPrice && matchesLocation;
   });
@@ -96,7 +101,6 @@ export default function ServicesPage({
               </div>
             </div>
 
-            {/* Category Filter UI */}
             <div className="space-y-2">
               <label className="text-xs font-semibold text-foreground">
                 Service Category
@@ -135,7 +139,6 @@ export default function ServicesPage({
               </div>
             </div>
 
-            {/* Location Selector UI */}
             {/* Location Selector UI */}
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-foreground">
@@ -180,7 +183,6 @@ export default function ServicesPage({
 
           {/* RIGHT MAIN DISPLAY SERVICES GRID */}
           <main className="lg:col-span-9 space-y-6">
-            {/* Top Bar */}
             <div className="bg-card border border-border p-4 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
               <p className="text-xs font-semibold text-muted-foreground">
                 Showing Services in{" "}

@@ -1,22 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React from "react";
 import { ServiceCard } from "./ServiceCard";
 import Link from "next/link";
-import { ArrowRight, Sparkles, Wrench } from "lucide-react";
+import { ArrowRight, Wrench } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { getAllServices } from "../_actions/getAllServices";
-import type { ServicesApiResponse } from "@/lib/types";
 
-const mockServices: ServicesApiResponse = await getAllServices();
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-    },
+    transition: { staggerChildren: 0.15 },
   },
 };
 
@@ -25,11 +21,10 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
-export function PublicServices() {
+export function PublicServices({ services = [] }: { services: any[] }) {
   return (
     <section className="py-16 lg:py-24 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* ================= SECTION HEADER WITH OUR SERVICES HEADING ================= */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -64,7 +59,6 @@ export function PublicServices() {
           </Link>
         </motion.div>
 
-        {/* ================= ANIMATED STAGGERED CARDS GRID ================= */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -72,7 +66,7 @@ export function PublicServices() {
           viewport={{ once: true, margin: "-50px" }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
-          {mockServices.data.map((service) => (
+          {services.slice(0, 4).map((service: any) => (
             <motion.div key={service.id} variants={itemVariants}>
               <ServiceCard service={service} />
             </motion.div>
