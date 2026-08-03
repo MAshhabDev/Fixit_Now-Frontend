@@ -1,4 +1,4 @@
-import { getAllServices } from "./_actions/getAllServices";
+import { getAllServices } from "./_actions/getAllPublicData";
 import { AboutSection } from "./_components/AboutSection";
 import { FaqSection } from "./_components/FaqSection";
 import { Footer } from "./_components/Footer";

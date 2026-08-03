@@ -3,7 +3,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getAllServices } from "../../_actions/getAllServices";
+import { getAllServices } from "../../_actions/getAllPublicData";
 import { BookingDialog } from "../../_components/BookFormDialog";
 import {
   Clock,

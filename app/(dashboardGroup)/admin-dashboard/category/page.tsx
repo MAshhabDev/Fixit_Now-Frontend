@@ -1,4 +1,4 @@
-import { getAllCategories } from "@/app/(publicGroup)/_actions/getAllServices";
+import { getAllCategories } from "@/app/(publicGroup)/_actions/getAllPublicData";
 import CategoryFormUI from "../_components/createCategory";
 
 export default async function AdminCategoriesPage() {

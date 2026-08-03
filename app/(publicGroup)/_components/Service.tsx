@@ -61,7 +61,7 @@ export default function ServicesPage({
     } else {
       params.delete(key);
     }
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    router.replace(`${pathname}?${params.toString()}`);
   };
 
   return (

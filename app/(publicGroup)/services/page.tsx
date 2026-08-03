@@ -1,6 +1,6 @@
 import { Wrench } from "lucide-react";
 import ServicesPage from "../_components/Service";
-import { getAllCategories, getAllServices } from "../_actions/getAllServices";
+import { getAllCategories, getAllServices } from "../_actions/getAllPublicData";
 
 const servicePage = async ({
   searchParams,

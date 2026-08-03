@@ -1,4 +1,4 @@
-import { getAllServices } from "@/app/(publicGroup)/_actions/getAllServices";
+import { getAllServices } from "@/app/(publicGroup)/_actions/getAllPublicData";
 import TechnicianServicesListUI from "../_components/TechnicianServicesListUI";
 
 export default async function MyServicesPage() {

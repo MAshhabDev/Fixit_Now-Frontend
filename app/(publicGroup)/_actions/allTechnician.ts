@@ -1,26 +1,36 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-"use server";
+export const getAllTechnician = async (query?: {
+  searchTerm?: string;
+  location?: string;
+  maxPrice?: string;
+  page?: number;
+  limit?: number;
+}) => {
+  const searchTerm = query?.searchTerm || "";
+  const location = query?.location || "";
+  const maxPrice = query?.maxPrice || "";
+  const page = query?.page || 1;
+  const limit = query?.limit || 6;
 
-export const getAllTechniciansAction = async () => {
   try {
     const res = await fetch(
-      `${process.env.BACKEND_API_URL}/api/technician`,
+      `https://fixit-now-backend-xjyr.onrender.com/api/technician?searchTerm=${searchTerm}&location=${location}&maxPrice=${maxPrice}&page=${page}&limit=${limit}`,
       {
-        method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          "content-type": "application/json",
         },
-        cache: "no-store",
+        next: {
+          revalidate: 60,
+          tags: ["all-technician"],
+        },
       }
     );
 
-    const result = await res.json();
-    return result;
-  } catch (error: any) {
-    return {
-      success: false,
-      message: error.message || "Failed to fetch technicians",
-      data: [],
-    };
+    if (!res.ok) {
+      return { success: false, data: [], meta: { page: 1, totalPage: 1 } };
+    }
+    return await res.json();
+  } catch (error) {
+    console.error("Fetch technician error:", error);
+    return { success: false, data: [], meta: { page: 1, totalPage: 1 } };
   }
 };
