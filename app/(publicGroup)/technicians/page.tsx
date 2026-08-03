@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+import Loading from "@/app/loading";
 import { getAllTechnician } from "../_actions/allTechnician";
 import AllTechniciansUI from "../_components/alltechnicianComponent";
 
@@ -23,5 +25,9 @@ export default async function AllTechniciansPage({
   });
   const techList = res?.data || [];
 
-  return <AllTechniciansUI techList={techList} />;
+  return (
+    <Suspense fallback={<Loading />}>
+      <AllTechniciansUI techList={techList} />
+    </Suspense>
+  );
 }
