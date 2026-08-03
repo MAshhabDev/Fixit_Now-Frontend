@@ -1,7 +1,12 @@
-export const getAllServices = async () => {
+export const getAllServices = async (query?: {
+  page?: number;
+  limit?: number;
+}) => {
   try {
+    const page = query?.page || 1;
+    const limit = query?.limit || 6;
     const res = await fetch(
-      "https://fixit-now-backend-xjyr.onrender.com/api/services",
+      `https://fixit-now-backend-xjyr.onrender.com/api/services?page=${page}&limit=${limit}`,
       {
         headers: {
           "content-type": "application/json",
@@ -10,7 +15,7 @@ export const getAllServices = async () => {
           revalidate: 60,
           tags: ["all-services"],
         },
-      }
+      },
     );
 
     if (!res.ok) {
@@ -35,7 +40,7 @@ export const getAllCategories = async () => {
           revalidate: 60,
           tags: ["all-categories"],
         },
-      }
+      },
     );
 
     if (!res.ok) {
@@ -60,7 +65,7 @@ export const getAllTechnician = async () => {
           revalidate: 60,
           tags: ["all-technician"],
         },
-      }
+      },
     );
 
     if (!res.ok) {

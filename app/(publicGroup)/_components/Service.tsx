@@ -6,17 +6,20 @@ import { Search, MapPin, Filter, SlidersHorizontal, X } from "lucide-react";
 import { ServiceCard } from "./ServiceCard";
 import type { Category, ServiceItem } from "@/lib/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Pagination } from "@/app/(dashboardGroup)/_components/Pagination";
 
 interface ServiceProps {
   search?: { [key: string]: string | string[] | undefined };
   allServices: ServiceItem[];
   allCategories: Category[];
+  meta?: { page: number; totalPage: number };
 }
 
 export default function ServicesPage({
   search,
   allServices = [],
   allCategories = [],
+  meta = { page: 1, totalPage: 1 },
 }: ServiceProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -61,6 +64,7 @@ export default function ServicesPage({
     } else {
       params.delete(key);
     }
+    params.set("page", "1");
     router.replace(`${pathname}?${params.toString()}`);
   };
 
@@ -215,6 +219,8 @@ export default function ServicesPage({
             </div>
           </main>
         </div>
+        <Pagination currentPage={meta?.page || 1} totalPages={meta?.totalPage || 1} />
+
       </div>
     </div>
   );

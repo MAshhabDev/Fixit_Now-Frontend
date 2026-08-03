@@ -5,12 +5,20 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { updateUserStatusAction, verifyTechnicianAction } from "../_actions/updateUserAction";
+import { Pagination } from "../../_components/Pagination";
 
 interface AdminUserUIProps {
   users: any[];
+  meta?: {
+    page: number;
+    totalPage: number;
+  };
 }
 
-export default function AdminUserManagementUI({ users = [] }: AdminUserUIProps) {
+export default function AdminUserManagementUI({
+  users = [],
+  meta = { page: 1, totalPage: 1 },
+}: AdminUserUIProps) {
   
   const handleToggleBlock = async (userId: string, currentStatus: string) => {
     const newStatus = currentStatus === "ACTIVE" ? "BLOCKED" : "ACTIVE";
@@ -128,6 +136,9 @@ export default function AdminUserManagementUI({ users = [] }: AdminUserUIProps) 
             </table>
           </div>
         </div>
+
+        {/* 🟢 Admin Table Pagination */}
+        <Pagination currentPage={meta.page} totalPages={meta.totalPage} />
 
       </div>
     </div>

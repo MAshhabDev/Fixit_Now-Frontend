@@ -9,13 +9,14 @@ const servicePage = async ({
 }) => {
   const search = await searchParams;
 
+  const page = Number(search?.page || 1);
 
-  const servicesRes = await getAllServices();
+  const servicesRes = await getAllServices({ page, limit: 6 });
   const categoriesRes = await getAllCategories();
 
   const allServices = servicesRes?.data || [];
   const allCategories = categoriesRes?.data || [];
-
+  const meta = servicesRes?.meta || { page: 1, totalPage: 1 };
 
   return (
     <div className="min-h-screen bg-background py-10">
@@ -40,7 +41,8 @@ const servicePage = async ({
           search={search}
           allServices={allServices}
           allCategories={allCategories}
-        ></ServicesPage>
+          meta={meta}
+        />
       </div>
     </div>
   );

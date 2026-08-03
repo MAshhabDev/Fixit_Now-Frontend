@@ -14,7 +14,7 @@ export const getAllBookingsAdminAction = async () => {
       };
     }
 
-    const res = await fetch(`${process.env.BACKEND_API_URL}/api/bookings`, {
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/admin/bookings`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${accessToken}`,
