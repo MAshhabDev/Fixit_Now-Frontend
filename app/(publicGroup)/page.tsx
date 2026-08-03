@@ -3,8 +3,10 @@ import { AboutSection } from "./_components/AboutSection";
 import { FaqSection } from "./_components/FaqSection";
 import { Footer } from "./_components/Footer";
 import { HeroSection } from "./_components/HeroSection";
+import { TestimonialsSection } from "./_components/PublicReview";
 import { PublicServices } from "./_components/PublicServices";
 import { TechnicianCTA } from "./_components/TechnicianCTA";
+import { HowItWorks } from "./_components/Work";
 
 const HomePage = async () => {
   const servicesRes = await getAllServices();
@@ -14,8 +16,12 @@ const HomePage = async () => {
       {/* 1. Hero Section */}
       <HeroSection />
 
+      <HowItWorks></HowItWorks>
+
       {/* 2. Featured / Public Services */}
       <PublicServices services={services} />
+
+      <TestimonialsSection></TestimonialsSection>
 
       {/* 3. About Section */}
       <AboutSection />

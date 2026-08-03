@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Sidebar,
   SidebarContent,
@@ -10,10 +13,9 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Wrench } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { ISidebarItem } from "@/lib/types";
 import {
   CUSTOMER_SIDEBAR_ITEMS,
@@ -28,7 +30,8 @@ interface SidebarProps {
 export default function DashboardSidebar({ user }: SidebarProps) {
   const pathname = usePathname();
 
-  const userRole = user?.data?.role || user?.data?.result?.role || "CUSTOMER";
+  const userInfo = user?.data?.result || user?.data || user;
+  const userRole = userInfo?.role || "CUSTOMER";
 
   let navItems: ISidebarItem[] = CUSTOMER_SIDEBAR_ITEMS;
 
@@ -40,20 +43,26 @@ export default function DashboardSidebar({ user }: SidebarProps) {
 
   return (
     <Sidebar
-      collapsible="none"
-      className="h-screen border-r border-border bg-card"
+      collapsible="icon"
+      className="h-screen border-r border-border bg-card group"
     >
-      {/* Brand Header */}
-      <SidebarHeader className="border-b border-border p-4">
+      {/* 🟢 1. Brand Logo Header + Auto-Hiding Text on Collapse */}
+      <SidebarHeader className="border-b border-border p-4 flex flex-row items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-primary text-primary-foreground flex items-center justify-center font-bold shadow-sm">
+          <div className="w-8 h-8 rounded-lg bg-primary text-primary-foreground flex items-center justify-center font-bold shadow-xs shrink-0">
             <Wrench className="w-4 h-4" />
           </div>
-          <span className="font-extrabold text-lg text-primary">FixItNow</span>
+
+          <span className="font-extrabold text-lg text-primary group-data-[collapsible=icon]:hidden">
+            FixItNow
+          </span>
         </Link>
+
+        {/* টগল বাটন */}
+        <SidebarTrigger className="cursor-pointer" />
       </SidebarHeader>
 
-      {/* Sidebar Content */}
+      {/* 🟢 2. Dynamic Navigation Menu Items */}
       <SidebarContent className="p-2">
         <SidebarGroup>
           <SidebarGroupContent>
@@ -77,8 +86,10 @@ export default function DashboardSidebar({ user }: SidebarProps) {
                         href={item.href}
                         className="flex items-center gap-2.5"
                       >
-                        <Icon className="w-4 h-4" />
-                        <span>{item.label}</span>
+                        <Icon className="w-4 h-4 shrink-0" />
+                        <span className="group-data-[collapsible=icon]:hidden">
+                          {item.label}
+                        </span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

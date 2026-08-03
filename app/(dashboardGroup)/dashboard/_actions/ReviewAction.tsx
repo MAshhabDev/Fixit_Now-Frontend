@@ -15,7 +15,7 @@ export const createReviewAction = async (payload: {
   }
 
   try {
-    const res = await fetch(`${process.env.BACKEND_API_URL}/api/reviews`, {
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/review`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

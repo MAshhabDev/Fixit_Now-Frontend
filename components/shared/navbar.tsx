@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useState } from "react";
@@ -17,7 +18,6 @@ import {
   Wrench,
   User,
   LayoutDashboard,
-  Calendar,
   Settings,
   LogOut,
   Menu,
@@ -43,16 +43,7 @@ const userMenuItems = [
 ];
 
 interface NavbarProps {
-  user?: {
-    success: boolean;
-    data?: {
-      result: {
-        name: string;
-        email: string;
-        role: "CUSTOMER" | "TECHNICIAN" | "ADMIN";
-      };
-    };
-  };
+  user?: any;
 }
 
 export function Navbar({ user }: NavbarProps) {
@@ -60,15 +51,18 @@ export function Navbar({ user }: NavbarProps) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // 🟢 1. 100% Fail-Safe Role Extraction
+  const userInfo = user?.data?.result || user?.data || user?.result || user;
+  const role = userInfo?.role || "CUSTOMER";
+
   const handleUserMenuAction = async (action: string) => {
     if (action === "dashboard") {
-      if (user?.data?.result.role === "CUSTOMER") {
-        router.push("dashboard");
-      } else if (user?.data?.result.role === "ADMIN") {
-        router.push("admin-dashboard");
-      }
-      if (user?.data?.result.role === "TECHNICIAN") {
-        router.push("technician-dashboard");
+      if (role === "ADMIN") {
+        router.push("/admin-dashboard");
+      } else if (role === "TECHNICIAN") {
+        router.push("/technician-dashboard");
+      } else {
+        router.push("/dashboard");
       }
     }
 
@@ -93,7 +87,7 @@ export function Navbar({ user }: NavbarProps) {
             </span>
           </Link>
 
-          {/* ================= 2. DESKTOP NAV LINKS WITH ANIMATED UNDERLINE ================= */}
+          {/* ================= 2. DESKTOP NAV LINKS ================= */}
           <div className="hidden md:absolute md:left-1/2 md:transform md:-translate-x-1/2 md:flex md:items-center md:gap-8">
             {navItems.map((item) => {
               const isActive = pathname === item.href;
@@ -110,7 +104,6 @@ export function Navbar({ user }: NavbarProps) {
                 >
                   <span>{item.label}</span>
 
-                  {/* ✨ Framer Motion Active Route Underline */}
                   {isActive && (
                     <motion.div
                       layoutId="active-nav-underline"
@@ -129,7 +122,7 @@ export function Navbar({ user }: NavbarProps) {
 
           {/* ================= 3. USER DROPDOWN OR LOGIN BUTTON ================= */}
           <div className="hidden md:flex md:items-center md:gap-4">
-            {user?.success ? (
+            {user?.success || userInfo?.name ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <div className="cursor-pointer focus:outline-none">
@@ -143,13 +136,13 @@ export function Navbar({ user }: NavbarProps) {
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
                       <p className="text-sm font-semibold leading-none text-foreground">
-                        {user.data?.result.name || "User Name"}
+                        {userInfo?.name || "User Name"}
                       </p>
                       <p className="text-xs text-muted-foreground leading-none">
-                        {user.data?.result.email || "user@example.com"}
+                        {userInfo?.email || "user@example.com"}
                       </p>
                       <span className="inline-block w-max mt-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-primary/10 text-primary">
-                        {user.data?.result.role || "CUSTOMER"}
+                        {role}
                       </span>
                     </div>
                   </DropdownMenuLabel>
@@ -235,26 +228,27 @@ export function Navbar({ user }: NavbarProps) {
           </div>
 
           <div className="pt-4 border-t border-border">
-            {user?.success ? (
+            {user?.success || userInfo?.name ? (
               <div className="space-y-2">
                 <div className="px-3 py-2 bg-accent/50 rounded-md">
-                  <p className="text-sm font-semibold">
-                    {user.data?.result.name}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {user.data?.result.email}
-                  </p>
+                  <p className="text-sm font-semibold">{userInfo?.name}</p>
+                  <p className="text-xs text-muted-foreground">{userInfo?.email}</p>
                 </div>
-                <Link
-                  href="/dashboard"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-md text-sm font-medium text-foreground hover:bg-accent"
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    handleUserMenuAction("dashboard");
+                  }}
+                  className="block w-full text-left px-3 py-2 rounded-md text-sm font-medium text-foreground hover:bg-accent cursor-pointer"
                 >
                   Dashboard
-                </Link>
+                </button>
                 <button
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="w-full text-left px-3 py-2 rounded-md text-sm font-medium text-destructive hover:bg-destructive/10"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    handleUserMenuAction("logout");
+                  }}
+                  className="w-full text-left px-3 py-2 rounded-md text-sm font-medium text-destructive hover:bg-destructive/10 cursor-pointer"
                 >
                   Log out
                 </button>
