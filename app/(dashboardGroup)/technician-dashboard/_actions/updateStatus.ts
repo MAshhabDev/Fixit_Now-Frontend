@@ -2,7 +2,7 @@
 "use server";
 
 import { isAccessTokenExist } from "@/service/refreshToken";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export const updateStatus = async (bookingId: string, status: string) => {
   try {
@@ -31,6 +31,9 @@ export const updateStatus = async (bookingId: string, status: string) => {
     const result = await res.json();
 
     if (result.success) {
+      revalidatePath("/dashboard");
+      revalidatePath("/technician-dashboard");
+
       revalidateTag("my-booking", { expire: 0 });
     }
 

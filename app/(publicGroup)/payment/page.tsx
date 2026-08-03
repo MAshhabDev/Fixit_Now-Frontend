@@ -28,7 +28,7 @@ export default function PaymentSuccessPage() {
 
         {/* Actions */}
         <div className="pt-2 space-y-3">
-          <Link href="/dashboard/my-booking" className="block w-full">
+          <Link href="/dashboard" className="block w-full">
             <Button className="w-full rounded-2xl font-bold text-xs py-5 bg-emerald-600 hover:bg-emerald-700 text-white shadow-md flex items-center justify-center gap-2 cursor-pointer">
               <Calendar className="w-4 h-4" />
               <span>Go to My Bookings</span>
