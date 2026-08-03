@@ -75,11 +75,7 @@ export const ADMIN_SIDEBAR_ITEMS: ISidebarItem[] = [
     href: "/admin-dashboard",
     icon: LayoutDashboard,
   },
-  {
-    label: "User Moderation",
-    href: "/dashboard/admin/users",
-    icon: Users,
-  },
+ 
   {
     label: "Create Category",
     href: "/admin-dashboard/category",

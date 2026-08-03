@@ -1,3 +1,4 @@
+import React from "react";
 import { getUsersAction } from "./_actions/getUserAction";
 import AdminUserManagementUI from "./_components/adminComponent";
 
@@ -10,6 +11,7 @@ export default async function AdminUsersPage({ searchParams }: PageProps) {
   const page = Number(resolvedParams?.page || 1);
 
   const usersRes = await getUsersAction({ page, limit: 10 });
+  
   const users = usersRes?.data || [];
   const meta = usersRes?.meta || { page: 1, totalPage: 1 };
 
