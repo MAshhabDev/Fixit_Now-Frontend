@@ -17,12 +17,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Wrench, User } from "lucide-react";
 import { toast } from "sonner";
-import type { ServiceItem } from "@/lib/types";
 import { BookingAction } from "../_actions/bookingAction"; // 👈 ইমপোর্ট যুক্ত করা হলো
 import { useRouter } from "next/navigation";
 
 type BookingDialogProps = {
-  service: ServiceItem;
+  service: any;
 };
 
 export function BookingDialog({ service }: BookingDialogProps) {
