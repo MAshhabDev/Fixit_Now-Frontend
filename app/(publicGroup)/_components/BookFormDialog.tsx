@@ -17,7 +17,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Wrench, User } from "lucide-react";
 import { toast } from "sonner";
-import { BookingAction } from "../_actions/bookingAction"; 
+import { BookingAction } from "../_actions/bookingAction";
 import { useRouter } from "next/navigation";
 
 type BookingDialogProps = {
@@ -43,18 +43,19 @@ export function BookingDialog({ service }: BookingDialogProps) {
 
       router.push("/dashboard/my-booking");
     } else if (state.message) {
-      toast.error(state.message);
-
-      if (
+      const isAuthError =
         state.message.toLowerCase().includes("log") ||
         state.message.toLowerCase().includes("user not logged in") ||
-        state.message.toLowerCase().includes("unauthorized")
-      ) {
-        toast.info("Redirecting to login page...");
+        state.message.toLowerCase().includes("unauthorized");
+
+      if (isAuthError) {
+        toast.error("Please login to book a service! Redirecting...");
         setTimeout(() => {
           router.push("/login");
         }, 1000);
       }
+    } else {
+      toast.error(state.message);
     }
   }, [state, router]);
 

@@ -2,6 +2,7 @@
 "use server";
 
 import { isAccessTokenExist } from "@/service/refreshToken";
+import getMe from "@/service/getMe";
 import { revalidateTag } from "next/cache";
 
 export const createServices = async (prevState: any, formData: FormData) => {
@@ -12,6 +13,17 @@ export const createServices = async (prevState: any, formData: FormData) => {
       return {
         success: false,
         message: "User not logged in!",
+      };
+    }
+
+    const userRes = await getMe();
+    const user = userRes?.data?.result || userRes?.data || userRes;
+    const isVerified = user?.technician?.isVerified;
+
+    if (user?.role === "TECHNICIAN" && isVerified === false) {
+      return {
+        success: false,
+        message: "Your profile is pending Admin Verification. You cannot create services yet!",
       };
     }
 

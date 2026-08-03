@@ -134,7 +134,7 @@ export function Footer() {
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-muted-foreground gap-4">
           <p>© {new Date().getFullYear()} FixItNow. All rights reserved.</p>
           <p className="flex items-center gap-1">
-            Built with <Heart className="w-3.5 h-3.5 fill-rose-500 text-rose-500" /> for Home Services
+            Built By Mahir Ashhab<Heart className="w-3.5 h-3.5 fill-rose-500 text-rose-500" />
           </p>
         </div>
 

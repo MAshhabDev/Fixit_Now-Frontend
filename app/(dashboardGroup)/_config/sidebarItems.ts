@@ -33,11 +33,7 @@ export const CUSTOMER_SIDEBAR_ITEMS: ISidebarItem[] = [
     href: "/dashboard/payment-details",
     icon: CreditCard,
   },
-  {
-    label: "My Reviews",
-    href: "/dashboard/customer/reviews",
-    icon: Star,
-  },
+  
 ];
 
 export const TECHNICIAN_SIDEBAR_ITEMS: ISidebarItem[] = [

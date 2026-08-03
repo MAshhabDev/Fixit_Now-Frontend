@@ -25,6 +25,7 @@ import {
 } from "lucide-react";
 import { logout } from "@/service/logout";
 import { toast } from "sonner";
+import { ModeToggle } from "./Mode";
 
 // Nav items for FixItNow
 const navItems = [
@@ -39,7 +40,6 @@ const navItems = [
 const userMenuItems = [
   { label: "Dashboard", icon: LayoutDashboard, action: "dashboard" },
   { label: "Profile", icon: User, action: "profile" },
-  { label: "Settings", icon: Settings, action: "settings" },
 ];
 
 interface NavbarProps {
@@ -51,7 +51,6 @@ export function Navbar({ user }: NavbarProps) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // 🟢 1. 100% Fail-Safe Role Extraction
   const userInfo = user?.data?.result || user?.data || user?.result || user;
   const role = userInfo?.role || "CUSTOMER";
 
@@ -120,8 +119,10 @@ export function Navbar({ user }: NavbarProps) {
             })}
           </div>
 
-          {/* ================= 3. USER DROPDOWN OR LOGIN BUTTON ================= */}
-          <div className="hidden md:flex md:items-center md:gap-4">
+          {/* ================= 3. DESKTOP MODE TOGGLE & USER DROPDOWN ================= */}
+          <div className="hidden md:flex md:items-center md:gap-3">
+            <ModeToggle />
+
             {user?.success || userInfo?.name ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -187,7 +188,8 @@ export function Navbar({ user }: NavbarProps) {
           </div>
 
           {/* ================= 4. MOBILE MENU TOGGLE ================= */}
-          <div className="flex md:hidden items-center">
+          <div className="flex md:hidden items-center gap-2">
+            <ModeToggle />
             <Button
               variant="ghost"
               size="icon"

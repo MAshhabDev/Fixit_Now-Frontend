@@ -42,6 +42,14 @@ export default function AdminUserManagementUI({
   const totalUsersCount = users.length;
   const activeTechnicians = users.filter((u) => u.role === "TECHNICIAN").length;
 
+  const realRevenue = users.reduce((acc: number, u: any) => {
+    const userSpent = Number(u.totalSpent || u.bookingAmount || 0);
+    return acc + userSpent;
+  }, 0);
+  const estimatedRevenue =
+    activeTechnicians > 0 ? activeTechnicians * 15000 : 25000;
+  const displayRevenue = realRevenue > 0 ? realRevenue : estimatedRevenue;
+
   const handleToggleBlock = async (userId: string, currentStatus: string) => {
     const newStatus = currentStatus === "ACTIVE" ? "BLOCKED" : "ACTIVE";
     const res = await updateUserStatusAction(userId, newStatus);
@@ -81,7 +89,6 @@ export default function AdminUserManagementUI({
           <CreateCategoryDialog />
         </div>
 
-        {/* 🟢 1. GLOBAL OVERVIEW STAT CARDS */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="bg-card border border-border rounded-2xl p-5 shadow-xs flex items-center gap-4">
             <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold">
@@ -119,7 +126,9 @@ export default function AdminUserManagementUI({
               <p className="text-xs font-bold text-muted-foreground uppercase">
                 Est. Service Revenue
               </p>
-              <p className="text-2xl font-black text-foreground">৳ 45,000</p>
+              <p className="text-2xl font-black text-emerald-600">
+                ৳ {displayRevenue.toLocaleString()}
+              </p>
             </div>
           </div>
         </div>

@@ -1,7 +1,6 @@
 import { getAllServices } from "./_actions/getAllPublicData";
 import { AboutSection } from "./_components/AboutSection";
 import { FaqSection } from "./_components/FaqSection";
-import { Footer } from "./_components/Footer";
 import { HeroSection } from "./_components/HeroSection";
 import { TestimonialsSection } from "./_components/PublicReview";
 import { PublicServices } from "./_components/PublicServices";
@@ -16,24 +15,24 @@ const HomePage = async () => {
       {/* 1. Hero Section */}
       <HeroSection />
 
-      <HowItWorks></HowItWorks>
+      {/* 2. How It Works */}
+      <HowItWorks />
 
-      {/* 2. Featured / Public Services */}
+      {/* 3. Featured / Public Services */}
       <PublicServices services={services} />
 
-      <TestimonialsSection></TestimonialsSection>
+      {/* 4. Customer Reviews */}
+      <TestimonialsSection />
 
-      {/* 3. About Section */}
+      {/* 5. About Section */}
       <AboutSection />
 
-      {/* 4. Technician Onboarding CTA Banner */}
+      {/* 6. Technician Onboarding CTA Banner */}
       <TechnicianCTA />
 
-      {/* 5. Frequently Asked Questions */}
+      {/* 7. Frequently Asked Questions */}
       <FaqSection />
 
-      {/* 6. Footer Section */}
-      <Footer />
     </main>
   );
 };
