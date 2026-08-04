@@ -1,4 +1,4 @@
-import { getAllCategories, getAllServices } from "@/app/(publicGroup)/_actions/getAllPublicData";
+import { getAllCategories,  } from "@/app/(publicGroup)/_actions/getAllPublicData";
 import CreateServiceForm from "../_components/serviceCreate";
 
 export default async function CreateServicePage() {

@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
+
 import { isAccessTokenExist } from "@/service/refreshToken";
-
-
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export const deleteServiceAction = async (serviceId: string) => {
   try {
@@ -25,13 +24,16 @@ export const deleteServiceAction = async (serviceId: string) => {
           Cookie: `accessToken=${accessToken}`,
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     const result = await res.json();
 
     if (result.success) {
-      revalidateTag("all-services",{expire:0});
+      revalidatePath("/technician-dashboard/my-services");
+      revalidatePath("/services");
+      revalidatePath("/");
+      revalidateTag("all-services", { expire: 0 });
     }
 
     return result;
