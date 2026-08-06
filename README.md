@@ -111,4 +111,4 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 📄 License & Attribution
 
-Designed and developed for **Assignment 5 - FixItNow Frontend**. Built with ❤️ using Next.js 15.
+Designed and developed by **Mahir Ashhab**. Built with using Next.js
